@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -34,6 +35,10 @@ public class UserController {
         return userRepository.findById(id).map(user -> {
             user.setName(updatedUser.getName());
             user.setEmail(updatedUser.getEmail());
+            user.setPassword(updatedUser.getPassword());
+            user.setAge(updatedUser.getAge());
+            user.setPhone(updatedUser.getPhone());
+            user.setRole(updatedUser.getRole());
             return userRepository.save(user);
         }).orElse(null);
     }

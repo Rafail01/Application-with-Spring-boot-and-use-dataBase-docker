@@ -13,11 +13,23 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    private String password;
+
+    private String age;
+
+    private String phone;
+
+    private String role;
+
     public User(){}
 
-    public User(String name, String email) {
+    public User(String name, String email, String password, String age, String phone, String role) {
         this.name = name;
         this.email = email;
+        this.password = password;
+        this.age = age;
+        this.phone = phone;
+        this.role = role;
     }
 
     // getters & setters
@@ -34,10 +46,42 @@ public class User {
         return email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
