@@ -6,7 +6,10 @@ import { updateUser, deleteUser, createUser } from '../api/userApi';
 import '../style/UserList.css';
 
 export const UserList: React.FC = () => {
-    const { data: users, isLoading, error, refetch } = useUsers();
+    const [page, setPage] = useState(0);
+    const [pageSize] = useState(5);
+
+    const { data: usersPage, isLoading, error, refetch } = useUsers(page, pageSize);
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -114,7 +117,7 @@ export const UserList: React.FC = () => {
                 <span>Phone</span>
                 <span>Action</span>
             </div>
-            {users?.map(user => (
+            {usersPage?.content?.map(user => (
                 <div className="user-list-row" key={user.id}>
                     <span>{user.name}</span>
                     <span>{user.email}</span>
@@ -182,6 +185,21 @@ export const UserList: React.FC = () => {
                     </div>
                 </div>
             )}
+            <div className="pagination-controls">
+                <button
+                    onClick={() => setPage(prev => Math.max(prev - 1, 0))}
+                    disabled={page === 0}
+                >
+                    Previous
+                </button>
+                <span>Page {page + 1} of {usersPage?.totalPages}</span>
+                <button
+                    onClick={() => setPage(prev => (usersPage && prev + 1 < usersPage.totalPages ? prev + 1 : prev))}
+                    disabled={usersPage && page + 1 >= usersPage.totalPages}
+                >
+                    Next
+                </button>
+            </div>
         </div>
     );
 };

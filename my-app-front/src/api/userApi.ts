@@ -1,9 +1,10 @@
 import axios from "axios";
+import {PageResponse, User} from "../types/types";
 
 const API_URL = "/users";
 
-export const getUsers = async () => {
-    const response = await axios.get(API_URL);
+export const getUsers = async (page: number = 0, size: number = 5): Promise<PageResponse<User>> => {
+    const response = await axios.get(`${API_URL}?page=${page}&size=${size}&sort=id,asc`);
     return response.data;
 };
 
