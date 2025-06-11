@@ -2,9 +2,13 @@ package com.example.Raf_DB.Controller;
 
 
 import com.example.Raf_DB.Repository.UserRepository;
+import com.example.Raf_DB.model.PageResponse;
 import com.example.Raf_DB.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 
 import java.util.List;
 
@@ -16,8 +20,15 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public PageResponse<User> getAllUsers(@PageableDefault(size = 10, sort = "id") Pageable pageable) {
+        Page<User> page = userRepository.findAll(pageable);
+        return new PageResponse<>(
+                page.getContent(),
+                page.getNumber(),
+                page.getSize(),
+                page.getTotalElements(),
+                page.getTotalPages()
+        );
     }
 
     @PostMapping
